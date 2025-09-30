@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jogo de Conjugação Verbal</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+            color: #333;
+            min-height: 100vh;
+            padding: 2rem;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+        }
+        
+        header {
+            background: linear-gradient(to right, #2c3e50, #4a6491);
+            color: white;
+            padding: 1.5rem;
+            text-align: center;
+        }
+        
+        h1 {
+            font-size: 2.2rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .score-board {
+            background: #34495e;
+            color: white;
+            padding: 1rem;
+            text-align: center;
+            font-size: 1.3rem;
+            font-weight: bold;
+        }
+        
+        .content {
+            padding: 2rem;
+        }
+        
+        .instructions {
+            background-color: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+            border-left: 5px solid #3498db;
+        }
+        
+        .instructions h2 {
+            color: #2c3e50;
+            margin-bottom: 1rem;
+        }
+        
+        .exercise-section {
+            margin-bottom: 3rem;
+        }
+        
+        .exercise-title {
+            background-color: #34495e;
+            color: white;
+            padding: 1rem;
+            border-radius: 8px 8px 0 0;
+            margin-bottom: 0;
+            font-size: 1.4rem;
+        }
+        
+        .exercise-table {
+            width: 100%;
+            border-collapse: collapse;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            margin-bottom: 1rem;
+        }
+        
+        .exercise-table th {
+            background-color: #2c3e50;
+            color: white;
+            padding: 1rem;
+            text-align: center;
+            font-weight: 600;
+        }
+        
+        .exercise-table td {
+            padding: 1rem;
+            text-align: center;
+            border-bottom: 1px solid #eaeaea;
+        }
+        
+        .verb-ar {
+            background-color: #e8f5e8;
+        }
+        
+        .verb-er {
+            background-color: #e8f0f5;
+        }
+        
+        .verb-ir {
+            background-color: #f5e8f5;
+        }
+        
+        .person {
+            font-weight: bold;
+            color: #2c3e50;
+            width: 80px;
+        }
+        
+        .verb-structure {
+            font-family: 'Courier New', monospace;
+            background-color: #f8f9fa;
+            padding: 0.5rem;
+            border-radius: 4px;
+            border: 1px solid #eaeaea;
+            font-weight: bold;
+        }
+        
+        .input-cell {
+            width: 120px;
+        }
+        
+        .termination-input {
+            width: 100%;
+            padding: 0.5rem;
+            border: 2px solid #ddd;
+            border-radius: 4px;
+            text-align: center;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+        
+        .termination-input:focus {
+            border-color: #3498db;
+            outline: none;
+            box-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
+        }
+        
+        .correct {
+            border-color: #27ae60 !important;
+            background-color: #d5f4e6;
+        }
+        
+        .incorrect {
+            border-color: #e74c3c !important;
+            background-color: #fadbd8;
+        }
+        
+        .feedback {
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: bold;
+            display: none;
+        }
+        
+        .correct-feedback {
+            background-color: #d5f4e6;
+            color: #27ae60;
+            border: 2px solid #27ae60;
+        }
+        
+        .incorrect-feedback {
+            background-color: #fadbd8;
+            color: #e74c3c;
+            border: 2px solid #e74c3c;
+        }
+        
+        .controls {
+            text-align: center;
+            margin-top: 2rem;
+        }
+        
+        .btn {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s;
+            margin: 0 0.5rem;
+        }
+        
+        .btn:hover {
+            background: #2980b9;
+        }
+        
+        .btn-check {
+            background: #27ae60;
+        }
+        
+        .btn-check:hover {
+            background: #219653;
+        }
+        
+        .btn-reset {
+            background: #e74c3c;
+        }
+        
+        .btn-reset:hover {
+            background: #c0392b;
+        }
+        
+        .results {
+            background-color: #2c3e50;
+            color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            text-align: center;
+            margin-top: 2rem;
+            display: none;
+        }
+        
+        .results h2 {
+            margin-bottom: 1rem;
+            font-size: 2rem;
+        }
+        
+        .final-score {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #fdbb2d;
+            margin: 1rem 0;
+        }
+        
+        .verb-info {
+            text-align: center;
+            margin-bottom: 1rem;
+            font-style: italic;
+            color: #666;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                margin: 1rem;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .exercise-table {
+                font-size: 0.9rem;
+            }
+            
+            .exercise-table th, 
+            .exercise-table td {
+                padding: 0.7rem 0.5rem;
+            }
+            
+            .input-cell {
+                width: 80px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Jogo de Conjugação Verbal</h1>
+            <div class="subtitle">Modo Indicativo - Verbos Estudar, Aprender e Decidir</div>
+        </header>
+        
+        <div class="score-board">
+            Pontuação: <span id="score">0</span> / <span id="total-questions">0</span>
+        </div>
+        
+        <div class="content">
+            <div class="instructions">
+                <h2>Instruções</h2>
+                <p>Complete as conjugações dos verbos <strong>estudar</strong>, <strong>aprender</strong> e <strong>decidir</strong> no Modo Indicativo.</p>
+                <p>• Cada acerto vale 1 ponto</p>
+                <p>• Você verá feedback imediato para cada resposta</p>
+                <p>• Ao final, clique em "Ver Resultado Final" para ver sua pontuação total</p>
+            </div>
+            
+            <!-- PRESENTE DO INDICATIVO -->
+            <div class="exercise-section">
+                <h2 class="exercise-title">1. Presente do Indicativo</h2>
+                <div class="verb-info">Radical: estud- | aprend- | decid-</div>
+                <table class="exercise-table">
+                    <thead>
+                        <tr>
+                            <th>Verbo</th>
+                            <th>Eu</th>
+                            <th>Tu</th>
+                            <th>Ele/Você</th>
+                            <th>Nós</th>
+                            <th>Vós</th>
+                            <th>Eles/Vocês</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="verb-ar">
+                            <td class="person">estudar</td>
+                            <td class="verb-structure">estud<input type="text" class="termination-input" data-correct="o" data-verb="estudar" data-tense="presente" data-person="eu"></td>
+                            <td class="verb-structure">estud<input type="text" class="termination-input" data-correct="as" data-verb="estudar" data-tense="presente" data-person="tu"></td>
+                            <td class="verb-structure">estud<input type="text" class="termination-input" data-correct="a" data-verb="estudar" data-tense="presente" data-person="ele"></td>
+                            <td class="verb-structure">estud<input type="text" class="termination-input" data-correct="amos" data-verb="estudar" data-tense="presente" data-person="nos"></td>
+                            <td class="verb-structure">estud<input type="text" class="termination-input" data-correct="ais" data-verb="estudar" data-tense="presente" data-person="vos"></td>
+                            <td class="verb-structure">estud<input type="text" class="termination-input" data-correct="am" data-verb="estudar" data-tense="presente" data-person="eles"></td>
+                        </tr>
+                        <tr class="verb-er">
+                            <td class="person">aprender</td>
+                            <td class="verb-structure">aprend<input type="text" class="termination-input" data-correct="o" data-verb="aprender" data-tense="presente" data-person="eu"></td>
+                            <td class="verb-structure">aprend<input type="text" class="termination-input" data-correct="es" data-verb="aprender" data-tense="presente" data-person="tu"></td>
+                            <td class="verb-structure">aprend<input type="text" class="termination-input" data-correct="e" data-verb="aprender" data-tense="presente" data-person="ele"></td>
+                            <td class="verb-structure">aprend<input type="text" class="termination-input" data-correct="emos" data-verb="aprender" data-tense="presente" data-person="nos"></td>
+                            <td class="verb-structure">aprend<input type="text" class="termination-input" data-correct="eis" data-verb="aprender" data-tense="presente" data-person="vos"></td>
+                            <td class="verb-structure">aprend<input type="text" class="termination-input" data-correct="em" data-verb="aprender" data-tense="presente" data-person="eles"></td>
+                        </tr>
+                        <tr class="verb-ir">
+                            <td class="person">decidir</td>
+                            <td class="verb-structure">decid<input type="text" class="termination-input" data-correct="o" data-verb="decidir" data-tense="presente" data-person="eu"></td>
+                            <td class="verb-structure">decid<input type="text" class="termination-input" data-correct="es" data-verb="decidir" data-tense="presente" data-person="tu"></td>
+                            <td class="verb-structure">decid<input type="text" class="termination-input" data-correct="e" data-verb="decidir" data-tense="presente" data-person="ele"></td>
+                            <td class="verb-structure">decid<input type="text" class="termination-input" data-correct="imos" data-verb="decidir" data-tense="presente" data-person="nos"></td>
+                            <td class="verb-structure">decid<input type="text" class="termination-input" data-correct="is" data-verb="decidir" data-tense="presente" data-person="vos"></td>
+                            <td class="verb-structure">decid<input type="text" class="termination-input" data-correct="em" data-verb="decidir" data-tense="presente" data-person="eles"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <!-- PRETÉRITO PERFEITO DO INDICATIVO -->
+            <div class="exercise-section">
+                <h2 class="exercise-title">2. Pretérito Perfeito do Indicativo</h2>
+                <div class="verb-info">Radical: estud- | aprend- | decid-</div>
+                <table class="exercise-table">
+                    <thead>
+                        <tr>
+                            <th>Verbo</th>
+                            <th>Eu</th>
+                            <th>Tu</th>
+                            <th>Ele/Você</th>
+                            <th>Nós</th>
+                            <th>Vós</th>
+                            <th>Eles/Vocês</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="verb-ar">
+                            <td class="person">estudar</td>
+                            <td class="verb-structure">estud<input type="text" class="termination-input" data-correct="ei" data-verb="estudar" data-tense="perfeito" data-person="eu"></td>
+                            <td class="verb-structure">estud<input type="text" class="termination-input" data-correct="aste" data-verb="estudar" data-tense="perfeito" data-person="tu"></td>
+                            <td class="verb-structure">estud<input type="text" class="termination-input" data-correct="ou" data-verb="estudar" data-tense="perfeito" data-person="ele"></td>
+                            <td class="verb-structure">estud<input type="text" class="termination-input" data-correct="amos" data-verb="estudar" data-tense="perfeito" data-person="nos"></td>
+                            <td class="verb-structure">estud<input type="text" class="termination-input" data-correct="astes" data-verb="estudar" data-tense="perfeito" data-person="vos"></td>
+                            <td class="verb-structure">estud<input type="text" class="termination-input" data-correct="aram" data-verb="estudar" data-tense="perfeito" data-person="eles"></td>
+                        </tr>
+                        <tr class="verb-er">
+                            <td class="person">aprender</td>
+                            <td class="verb-structure">aprend<input type="text" class="termination-input" data-correct="i" data-verb="aprender" data-tense="perfeito" data-person="eu"></td>
+                            <td class="verb-structure">aprend<input type="text" class="termination-input" data-correct="este" data-verb="aprender" data-tense="perfeito" data-person="tu"></td>
+                            <td class="verb-structure">aprend<input type="text" class="termination-input" data-correct="eu" data-verb="aprender" data-tense="perfeito" data-person="ele"></td>
+                            <td class="verb-structure">aprend<input type="text" class="termination-input" data-correct="emos" data-verb="aprender" data-tense="perfeito" data-person="nos"></td>
+                            <td class="verb-structure">aprend<input type="text" class="termination-input" data-correct="estes" data-verb="aprender" data-tense="perfeito" data-person="vos"></td>
+                            <td class="verb-structure">aprend<input type="text" class="termination-input" data-correct="eram" data-verb="aprender" data-tense="perfeito" data-person="eles"></td>
+                        </tr>
+                        <tr class="verb-ir">
+                            <td class="person">decidir</td>
+                            <td class="verb-structure">decid<input type="text" class="termination-input" data-correct="i" data-verb="decidir" data-tense="perfeito" data-person="eu"></td>
+                            <td class="verb-structure">decid<input type="text" class="termination-input" data-correct="iste" data-verb="decidir" data-tense="perfeito" data-person="tu"></td>
+                            <td class="verb-structure">decid<input type="text" class="termination-input" data-correct="iu" data-verb="decidir" data-tense="perfeito" data-person="ele"></td>
+                            <td class="verb-structure">decid<input type="text" class="termination-input" data-correct="imos" data-verb="decidir" data-tense="perfeito" data-person="nos"></td>
+                            <td class="verb-structure">decid<input type="text" class="termination-input" data-correct="istes" data-verb="decidir" data-tense="perfeito" data-person="vos"></td>
+                            <td class="verb-structure">decid<input type="text" class="termination-input" data-correct="iram" data-verb="decidir" data-tense="perfeito" data-person="eles"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <!-- PRETÉRITO IMPERFEITO DO INDICATIVO -->
+            <div class="exercise-section">
+                <h2 class="exercise-title">3. Pretérito Imperfeito do Indicativo</h2>
+                <div class="verb-info">Radical: estud- | aprend- | decid-</div>
+                <table class="exercise-table">
+                    <thead>
+                        <tr>
+                            <th>Verbo</th>
+                            <th>Eu</th>
+                            <th>Tu</th>
+                            <th>Ele/Você</th>
+                            <th>Nós</th>
+                            <th>Vós</th>
+                            <th>Eles/Vocês</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="verb-ar">
+                            <td class="person">estudar</td>
+                            <td class="verb-structure">estud<input type="text" class="termination-input" data-correct="ava" data-verb="estudar" data-tense="imperfeito" data-person="eu"></td>
+                            <td class="verb-structure">estud<input type="text" class="termination-input" data-correct="avas" data-verb="estudar" data-tense="imperfeito" data-person="tu"></td>
+                            <td class="verb-structure">estud<input type="text" class="termination-input" data-correct="ava" data-verb="estudar" data-tense="imperfeito" data-person="ele"></td>
+                            <td class="verb-structure">estud<input type="text" class="termination-input" data-correct="ávamos" data-verb="estudar" data-tense="imperfeito" data-person="nos"></td>
+                            <td class="verb-structure">estud<input type="text" class="termination-input" data-correct="áveis" data-verb="estudar" data-tense="imperfeito" data-person="vos"></td>
+                            <td class="verb-structure">estud<input type="text" class="termination-input" data-correct="avam" data-verb="estudar" data-tense="imperfeito" data-person="eles"></td>
+                        </tr>
+                        <tr class="verb-er">
+                            <td class="person">aprender</td>
+                            <td class="verb-structure">aprend<input type="text" class="termination-input" data-correct="ia" data-verb="aprender" data-tense="imperfeito" data-person="eu"></td>
+                            <td class="verb-structure">aprend<input type="text" class="termination-input" data-correct="ias" data-verb="aprender" data-tense="imperfeito" data-person="tu"></td>
+                            <td class="verb-structure">aprend<input type="text" class="termination-input" data-correct="ia" data-verb="aprender" data-tense="imperfeito" data-person="ele"></td>
+                            <td class="verb-structure">aprend<input type="text" class="termination-input" data-correct="íamos" data-verb="aprender" data-tense="imperfeito" data-person="nos"></td>
+                            <td class="verb-structure">aprend<input type="text" class="termination-input" data-correct="íeis" data-verb="aprender" data-tense="imperfeito" data-person="vos"></td>
+                            <td class="verb-structure">aprend<input type="text" class="termination-input" data-correct="iam" data-verb="aprender" data-tense="imperfeito" data-person="eles"></td>
+                        </tr>
+                        <tr class="verb-ir">
+                            <td class="person">decidir</td>
+                            <td class="verb-structure">decid<input type="text" class="termination-input" data-correct="ia" data-verb="decidir" data-tense="imperfeito" data-person="eu"></td>
+                            <td class="verb-structure">decid<input type="text" class="termination-input" data-correct="ias" data-verb="decidir" data-tense="imperfeito" data-person="tu"></td>
+                            <td class="verb-structure">decid<input type="text" class="termination-input" data-correct="ia" data-verb="decidir" data-tense="imperfeito" data-person="ele"></td>
+                            <td class="verb-structure">decid<input type="text" class="termination-input" data-correct="íamos" data-verb="decidir" data-tense="imperfeito" data-person="nos"></td>
+                            <td class="verb-structure">decid<input type="text" class="termination-input" data-correct="íeis" data-verb="decidir" data-tense="imperfeito" data-person="vos"></td>
+                            <td class="verb-structure">decid<input type="text" class="termination-input" data-correct="iam" data-verb="decidir" data-tense="imperfeito" data-person="eles"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <!-- FUTURO DO PRESENTE DO INDICATIVO -->
+            <div class="exercise-section">
+                <h2 class="exercise-title">4. Futuro do Presente do Indicativo</h2>
+                <div class="verb-info">Radical: estud- | aprend- | decid-</div>
+                <table class="exercise-table">
+                    <thead>
+                        <tr>
+                            <th>Verbo</th>
+                            <th>Eu</th>
+                            <th>Tu</th>
+                            <th>Ele/Você</th>
+                            <th>Nós</th>
+                            <th>Vós</th>
+                            <th>Eles/Vocês</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="verb-ar">
+                            <td class="person">estudar</td>
+                            <td class="verb-structure">estud<input type="text" class="termination-input" data-correct="arei" data-verb="estudar" data-tense="futuro-presente" data-person="eu"></td>
+                            <td class="verb-structure">estud<input type="text" class="termination-input" data-correct="arás" data-verb="estudar" data-tense="futuro-presente" data-person="tu"></td>
+                            <td class="verb-structure">estud<input type="text" class="termination-input" data-correct="ará" data-verb="estudar" data-tense="futuro-presente" data-person="ele"></td>
+                            <td class="verb-structure">estud<input type="text" class="termination-input" data-correct="aremos" data-verb="estudar" data-tense="futuro-presente" data-person="nos"></td>
+                            <td class="verb-structure">estud<input type="text" class="termination-input" data-correct="areis" data-verb="estudar" data-tense="futuro-presente" data-person="vos"></td>
+                            <td class="verb-structure">estud<input type="text" class="termination-input" data-correct="arão" data-verb="estudar" data-tense="futuro-presente" data-person="eles"></td>
+                        </tr>
+                        <tr class="verb-er">
+                            <td class="person">aprender</td>
+                            <td class="verb-structure">aprend<input type="text" class="termination-input" data-correct="erei" data-verb="aprender" data-tense="futuro-presente" data-person="eu"></td>
+                            <td class="verb-structure">aprend<input type="text" class="termination-input" data-correct="erás" data-verb="aprender" data-tense="futuro-presente" data-person="tu"></td>
+                            <td class="verb-structure">aprend<input type="text" class="termination-input" data-correct="erá" data-verb="aprender" data-tense="futuro-presente" data-person="ele"></td>
+                            <td class="verb-structure">aprend<input type="text" class="termination-input" data-correct="eremos" data-verb="aprender" data-tense="futuro-presente" data-person="nos"></td>
+                            <td class="verb-structure">aprend<input type="text" class="termination-input" data-correct="ereis" data-verb="aprender" data-tense="futuro-presente" data-person="vos"></td>
+                            <td class="verb-structure">aprend<input type="text" class="termination-input" data-correct="erão" data-verb="aprender" data-tense="futuro-presente" data-person="eles"></td>
+                        </tr>
+                        <tr class="verb-ir">
+                            <td class="person">decidir</td>
+                            <td class="verb-structure">decid<input type="text" class="termination-input" data-correct="irei" data-verb="decidir" data-tense="futuro-presente" data-person="eu"></td>
+                            <td class="verb-structure">decid<input type="text" class="termination-input" data-correct="irás" data-verb="decidir" data-tense="futuro-presente" data-person="tu"></td>
+                            <td class="verb-structure">decid<input type="text" class="termination-input" data-correct="irá" data-verb="decidir" data-tense="futuro-presente" data-person="ele"></td>
+                            <td class="verb-structure">decid<input type="text" class="termination-input" data-correct="iremos" data-verb="decidir" data-tense="futuro-presente" data-person="nos"></td>
+                            <td class="verb-structure">decid<input type="text" class="termination-input" data-correct="ireis" data-verb="decidir" data-tense="futuro-presente" data-person="vos"></td>
+                            <td class="verb-structure">decid<input type="text" class="termination-input" data-correct="irão" data-verb="decidir" data-tense="futuro-presente" data-person="eles"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <!-- FUTURO DO PRETÉRITO DO INDICATIVO -->
+            <div class="exercise-section">
+                <h2 class="exercise-title">5. Futuro do Pretérito do Indicativo</h2>
+                <div class="verb-info">Radical: estud- | aprend- | decid-</div>
+                <table class="exercise-table">
+                    <thead>
+                        <tr>
+                            <th>Verbo</th>
+                            <th>Eu</th>
+                            <th>Tu</th>
+                            <th>Ele/Você</th>
+                            <th>Nós</th>
+                            <th>Vós</th>
+                            <th>Eles/Vocês</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="verb-ar">
+                            <td class="person">estudar</td>
+                            <td class="verb-structure">estud<input type="text" class="termination-input" data-correct="aria" data-verb="estudar" data-tense="futuro-preterito" data-person="eu"></td>
+                            <td class="verb-structure">estud<input type="text" class="termination-input" data-correct="arias" data-verb="estudar" data-tense="futuro-preterito" data-person="tu"></td>
+                            <td class="verb-structure">estud<input type="text" class="termination-input" data-correct="aria" data-verb="estudar" data-tense="futuro-preterito" data-person="ele"></td>
+                            <td class="verb-structure">estud<input type="text" class="termination-input" data-correct="aríamos" data-verb="estudar" data-tense="futuro-preterito" data-person="nos"></td>
+                            <td class="verb-structure">estud<input type="text" class="termination-input" data-correct="aríeis" data-verb="estudar" data-tense="futuro-preterito" data-person="vos"></td>
+                            <td class="verb-structure">estud<input type="text" class="termination-input" data-correct="ariam" data-verb="estudar" data-tense="futuro-preterito" data-person="eles"></td>
+                        </tr>
+                        <tr class="verb-er">
+                            <td class="person">aprender</td>
+                            <td class="verb-structure">aprend<input type="text" class="termination-input" data-correct="eria" data-verb="aprender" data-tense="futuro-preterito" data-person="eu"></td>
+                            <td class="verb-structure">aprend<input type="text" class="termination-input" data-correct="erias" data-verb="aprender" data-tense="futuro-preterito" data-person="tu"></td>
+                            <td class="verb-structure">aprend<input type="text" class="termination-input" data-correct="eria" data-verb="aprender" data-tense="futuro-preterito" data-person="ele"></td>
+                            <td class="verb-structure">aprend<input type="text" class="termination-input" data-correct="eríamos" data-verb="aprender" data-tense="futuro-preterito" data-person="nos"></td>
+                            <td class="verb-structure">aprend<input type="text" class="termination-input" data-correct="eríeis" data-verb="aprender" data-tense="futuro-preterito" data-person="vos"></td>
+                            <td class="verb-structure">aprend<input type="text" class="termination-input" data-correct="eriam" data-verb="aprender" data-tense="futuro-preterito" data-person="eles"></td>
+                        </tr>
+                        <tr class="verb-ir">
+                            <td class="person">decidir</td>
+                            <td class="verb-structure">decid<input type="text" class="termination-input" data-correct="iria" data-verb="decidir" data-tense="futuro-preterito" data-person="eu"></td>
+                            <td class="verb-structure">decid<input type="text" class="termination-input" data-correct="irias" data-verb="decidir" data-tense="futuro-preterito" data-person="tu"></td>
+                            <td class="verb-structure">decid<input type="text" class="termination-input" data-correct="iria" data-verb="decidir" data-tense="futuro-preterito" data-person="ele"></td>
+                            <td class="verb-structure">decid<input type="text" class="termination-input" data-correct="iríamos" data-verb="decidir" data-tense="futuro-preterito" data-person="nos"></td>
+                            <td class="verb-structure">decid<input type="text" class="termination-input" data-correct="iríeis" data-verb="decidir" data-tense="futuro-preterito" data-person="vos"></td>
+                            <td class="verb-structure">decid<input type="text" class="termination-input" data-correct="iriam" data-verb="decidir" data-tense="futuro-preterito" data-person="eles"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="feedback correct-feedback" id="correct-feedback">
+                ✓ Parabéns! Resposta correta!
+            </div>
+            
+            <div class="feedback incorrect-feedback" id="incorrect-feedback">
+                ✗ Resposta incorreta. Tente novamente!
+            </div>
+            
+            <div class="controls">
+                <button class="btn btn-check" onclick="checkAllAnswers()">Verificar Respostas</button>
+                <button class="btn btn-reset" onclick="resetExercise()">Reiniciar Exercício</button>
+                <button class="btn" onclick="showFinalResults()">Ver Resultado Final</button>
+            </div>
+            
+            <div class="results" id="final-results">
+                <h2>Resultado Final</h2>
+                <div class="final-score" id="final-score">0</div>
+                <p>de <span id="total-questions-final">0</span> questões</p>
+                <button class="btn" onclick="closeResults()">Fechar</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let score = 0;
+        let totalQuestions = 0;
+        let answeredQuestions = 0;
+        
+        // Inicializar o exercício
+        function initializeExercise() {
+            const inputs = document.querySelectorAll('.termination-input');
+            totalQuestions = inputs.length;
+            document.getElementById('total-questions').textContent = totalQuestions;
+            document.getElementById('total-questions-final').textContent = totalQuestions;
+            
+            // Adicionar event listeners para verificação em tempo real
+            inputs.forEach(input => {
+                input.addEventListener('input', function() {
+                    checkSingleAnswer(this);
+                });
+                
+                // Permitir verificação com Enter
+                input.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        checkSingleAnswer(this);
+                    }
+                });
+            });
+        }
+        
+        // Verificar uma única resposta
+        function checkSingleAnswer(input) {
+            const userAnswer = input.value.trim().toLowerCase();
+            const correctAnswer = input.getAttribute('data-correct').toLowerCase();
+            
+            if (userAnswer === '') {
+                input.classList.remove('correct', 'incorrect');
+                return;
+            }
+            
+            if (userAnswer === correctAnswer) {
+                input.classList.remove('incorrect');
+                input.classList.add('correct');
+                showFeedback('correct');
+                
+                // Marcar como respondida corretamente (evitar dupla contagem)
+                if (!input.hasAttribute('data-answered')) {
+                    score++;
+                    answeredQuestions++;
+                    input.setAttribute('data-answered', 'true');
+                    updateScore();
+                }
+            } else {
+                input.classList.remove('correct');
+                input.classList.add('incorrect');
+                showFeedback('incorrect');
+            }
+        }
+        
+        // Verificar todas as respostas
+        function checkAllAnswers() {
+            const inputs = document.querySelectorAll('.termination-input');
+            inputs.forEach(input => {
+                if (input.value.trim() !== '') {
+                    checkSingleAnswer(input);
+                }
+            });
+        }
+        
+        // Mostrar feedback
+        function showFeedback(type) {
+            const correctFeedback = document.getElementById('correct-feedback');
+            const incorrectFeedback = document.getElementById('incorrect-feedback');
+            
+            if (type === 'correct') {
+                correctFeedback.style.display = 'block';
+                incorrectFeedback.style.display = 'none';
+            } else {
+                correctFeedback.style.display = 'none';
+                incorrectFeedback.style.display = 'block';
+            }
+            
+            // Esconder feedback após 2 segundos
+            setTimeout(() => {
+                correctFeedback.style.display = 'none';
+                incorrectFeedback.style.display = 'none';
+            }, 2000);
+        }
+        
+        // Atualizar pontuação
+        function updateScore() {
+            document.getElementById('score').textContent = score;
+        }
+        
+        // Mostrar resultados finais
+        function showFinalResults() {
+            document.getElementById('final-score').textContent = score;
+            document.getElementById('final-results').style.display = 'block';
+        }
+        
+        // Fechar resultados
+        function closeResults() {
+            document.getElementById('final-results').style.display = 'none';
+        }
+        
+        // Reiniciar exercício
+        function resetExercise() {
+            const inputs = document.querySelectorAll('.termination-input');
+            inputs.forEach(input => {
+                input.value = '';
+                input.classList.remove('correct', 'incorrect');
+                input.removeAttribute('data-answered');
+            });
+            
+            score = 0;
+            answeredQuestions = 0;
+            updateScore();
+            
+            document.getElementById('correct-feedback').style.display = 'none';
+            document.getElementById('incorrect-feedback').style.display = 'none';
+            document.getElementById('final-results').style.display = 'none';
+        }
+        
+        // Inicializar quando a página carregar
+        window.onload = initializeExercise;
+    </script>
+</body>
+</html>
