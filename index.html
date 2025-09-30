@@ -45,8 +45,36 @@
             opacity: 0.9;
         }
         
-        .score-board {
+        .student-info {
             background: #34495e;
+            color: white;
+            padding: 1.5rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .info-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        
+        .info-group label {
+            font-weight: bold;
+        }
+        
+        .info-group input, .info-group select {
+            padding: 0.5rem;
+            border: none;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        
+        .score-board {
+            background: #2c3e50;
             color: white;
             padding: 1rem;
             text-align: center;
@@ -82,6 +110,7 @@
             border-radius: 8px 8px 0 0;
             margin-bottom: 0;
             font-size: 1.4rem;
+            text-align: center;
         }
         
         .exercise-table {
@@ -105,15 +134,15 @@
             border-bottom: 1px solid #eaeaea;
         }
         
-        .verb-ar {
+        .conj-ar {
             background-color: #e8f5e8;
         }
         
-        .verb-er {
+        .conj-er {
             background-color: #e8f0f5;
         }
         
-        .verb-ir {
+        .conj-ir {
             background-color: #f5e8f5;
         }
         
@@ -129,7 +158,7 @@
             padding: 0.5rem;
             border-radius: 4px;
             border: 1px solid #eaeaea;
-            font-weight: bold;
+            white-space: nowrap;
         }
         
         .input-cell {
@@ -242,11 +271,11 @@
             margin: 1rem 0;
         }
         
-        .verb-info {
-            text-align: center;
-            margin-bottom: 1rem;
-            font-style: italic;
-            color: #666;
+        .student-results {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
         }
         
         @media (max-width: 768px) {
@@ -270,6 +299,11 @@
             .input-cell {
                 width: 80px;
             }
+            
+            .student-info {
+                flex-direction: column;
+                align-items: stretch;
+            }
         }
     </style>
 </head>
@@ -280,6 +314,23 @@
             <div class="subtitle">Modo Indicativo - Verbos Estudar, Aprender e Decidir</div>
         </header>
         
+        <div class="student-info">
+            <div class="info-group">
+                <label for="student-name">Nome do Aluno:</label>
+                <input type="text" id="student-name" placeholder="Digite seu nome">
+            </div>
+            <div class="info-group">
+                <label for="student-class">Turma:</label>
+                <select id="student-class">
+                    <option value="">Selecione sua turma</option>
+                    <option value="6A">6º A</option>
+                    <option value="6B">6º B</option>
+                    <option value="6C">6º C</option>
+                    <option value="6D">6º D</option>
+                </select>
+            </div>
+        </div>
+        
         <div class="score-board">
             Pontuação: <span id="score">0</span> / <span id="total-questions">0</span>
         </div>
@@ -288,19 +339,25 @@
             <div class="instructions">
                 <h2>Instruções</h2>
                 <p>Complete as conjugações dos verbos <strong>estudar</strong>, <strong>aprender</strong> e <strong>decidir</strong> no Modo Indicativo.</p>
+                <p>• Use o radical <strong>estud-</strong> para o verbo estudar</p>
+                <p>• Use o radical <strong>aprend-</strong> para o verbo aprender</p>
+                <p>• Use o radical <strong>decid-</strong> para o verbo decidir</p>
                 <p>• Cada acerto vale 1 ponto</p>
                 <p>• Você verá feedback imediato para cada resposta</p>
-                <p>• Ao final, clique em "Ver Resultado Final" para ver sua pontuação total</p>
             </div>
             
             <!-- PRESENTE DO INDICATIVO -->
             <div class="exercise-section">
                 <h2 class="exercise-title">1. Presente do Indicativo</h2>
-                <div class="verb-info">Radical: estud- | aprend- | decid-</div>
+                
+                <!-- VERBO ESTUDAR -->
                 <table class="exercise-table">
                     <thead>
                         <tr>
-                            <th>Verbo</th>
+                            <th colspan="7" style="background: #27ae60;">Verbo ESTUDAR (radical: estud-)</th>
+                        </tr>
+                        <tr>
+                            <th>Pessoa</th>
                             <th>Eu</th>
                             <th>Tu</th>
                             <th>Ele/Você</th>
@@ -309,9 +366,9 @@
                             <th>Eles/Vocês</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr class="verb-ar">
-                            <td class="person">estudar</td>
+                    <tbody class="conj-ar">
+                        <tr>
+                            <td class="person">Conjugação</td>
                             <td class="verb-structure">estud<input type="text" class="termination-input" data-correct="o" data-verb="estudar" data-tense="presente" data-person="eu"></td>
                             <td class="verb-structure">estud<input type="text" class="termination-input" data-correct="as" data-verb="estudar" data-tense="presente" data-person="tu"></td>
                             <td class="verb-structure">estud<input type="text" class="termination-input" data-correct="a" data-verb="estudar" data-tense="presente" data-person="ele"></td>
@@ -319,8 +376,28 @@
                             <td class="verb-structure">estud<input type="text" class="termination-input" data-correct="ais" data-verb="estudar" data-tense="presente" data-person="vos"></td>
                             <td class="verb-structure">estud<input type="text" class="termination-input" data-correct="am" data-verb="estudar" data-tense="presente" data-person="eles"></td>
                         </tr>
-                        <tr class="verb-er">
-                            <td class="person">aprender</td>
+                    </tbody>
+                </table>
+                
+                <!-- VERBO APRENDER -->
+                <table class="exercise-table">
+                    <thead>
+                        <tr>
+                            <th colspan="7" style="background: #2980b9;">Verbo APRENDER (radical: aprend-)</th>
+                        </tr>
+                        <tr>
+                            <th>Pessoa</th>
+                            <th>Eu</th>
+                            <th>Tu</th>
+                            <th>Ele/Você</th>
+                            <th>Nós</th>
+                            <th>Vós</th>
+                            <th>Eles/Vocês</th>
+                        </tr>
+                    </thead>
+                    <tbody class="conj-er">
+                        <tr>
+                            <td class="person">Conjugação</td>
                             <td class="verb-structure">aprend<input type="text" class="termination-input" data-correct="o" data-verb="aprender" data-tense="presente" data-person="eu"></td>
                             <td class="verb-structure">aprend<input type="text" class="termination-input" data-correct="es" data-verb="aprender" data-tense="presente" data-person="tu"></td>
                             <td class="verb-structure">aprend<input type="text" class="termination-input" data-correct="e" data-verb="aprender" data-tense="presente" data-person="ele"></td>
@@ -328,8 +405,28 @@
                             <td class="verb-structure">aprend<input type="text" class="termination-input" data-correct="eis" data-verb="aprender" data-tense="presente" data-person="vos"></td>
                             <td class="verb-structure">aprend<input type="text" class="termination-input" data-correct="em" data-verb="aprender" data-tense="presente" data-person="eles"></td>
                         </tr>
-                        <tr class="verb-ir">
-                            <td class="person">decidir</td>
+                    </tbody>
+                </table>
+                
+                <!-- VERBO DECIDIR -->
+                <table class="exercise-table">
+                    <thead>
+                        <tr>
+                            <th colspan="7" style="background: #8e44ad;">Verbo DECIDIR (radical: decid-)</th>
+                        </tr>
+                        <tr>
+                            <th>Pessoa</th>
+                            <th>Eu</th>
+                            <th>Tu</th>
+                            <th>Ele/Você</th>
+                            <th>Nós</th>
+                            <th>Vós</th>
+                            <th>Eles/Vocês</th>
+                        </tr>
+                    </thead>
+                    <tbody class="conj-ir">
+                        <tr>
+                            <td class="person">Conjugação</td>
                             <td class="verb-structure">decid<input type="text" class="termination-input" data-correct="o" data-verb="decidir" data-tense="presente" data-person="eu"></td>
                             <td class="verb-structure">decid<input type="text" class="termination-input" data-correct="es" data-verb="decidir" data-tense="presente" data-person="tu"></td>
                             <td class="verb-structure">decid<input type="text" class="termination-input" data-correct="e" data-verb="decidir" data-tense="presente" data-person="ele"></td>
@@ -341,62 +438,18 @@
                 </table>
             </div>
             
-            <!-- PRETÉRITO PERFEITO DO INDICATIVO -->
-            <div class="exercise-section">
-                <h2 class="exercise-title">2. Pretérito Perfeito do Indicativo</h2>
-                <div class="verb-info">Radical: estud- | aprend- | decid-</div>
-                <table class="exercise-table">
-                    <thead>
-                        <tr>
-                            <th>Verbo</th>
-                            <th>Eu</th>
-                            <th>Tu</th>
-                            <th>Ele/Você</th>
-                            <th>Nós</th>
-                            <th>Vós</th>
-                            <th>Eles/Vocês</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr class="verb-ar">
-                            <td class="person">estudar</td>
-                            <td class="verb-structure">estud<input type="text" class="termination-input" data-correct="ei" data-verb="estudar" data-tense="perfeito" data-person="eu"></td>
-                            <td class="verb-structure">estud<input type="text" class="termination-input" data-correct="aste" data-verb="estudar" data-tense="perfeito" data-person="tu"></td>
-                            <td class="verb-structure">estud<input type="text" class="termination-input" data-correct="ou" data-verb="estudar" data-tense="perfeito" data-person="ele"></td>
-                            <td class="verb-structure">estud<input type="text" class="termination-input" data-correct="amos" data-verb="estudar" data-tense="perfeito" data-person="nos"></td>
-                            <td class="verb-structure">estud<input type="text" class="termination-input" data-correct="astes" data-verb="estudar" data-tense="perfeito" data-person="vos"></td>
-                            <td class="verb-structure">estud<input type="text" class="termination-input" data-correct="aram" data-verb="estudar" data-tense="perfeito" data-person="eles"></td>
-                        </tr>
-                        <tr class="verb-er">
-                            <td class="person">aprender</td>
-                            <td class="verb-structure">aprend<input type="text" class="termination-input" data-correct="i" data-verb="aprender" data-tense="perfeito" data-person="eu"></td>
-                            <td class="verb-structure">aprend<input type="text" class="termination-input" data-correct="este" data-verb="aprender" data-tense="perfeito" data-person="tu"></td>
-                            <td class="verb-structure">aprend<input type="text" class="termination-input" data-correct="eu" data-verb="aprender" data-tense="perfeito" data-person="ele"></td>
-                            <td class="verb-structure">aprend<input type="text" class="termination-input" data-correct="emos" data-verb="aprender" data-tense="perfeito" data-person="nos"></td>
-                            <td class="verb-structure">aprend<input type="text" class="termination-input" data-correct="estes" data-verb="aprender" data-tense="perfeito" data-person="vos"></td>
-                            <td class="verb-structure">aprend<input type="text" class="termination-input" data-correct="eram" data-verb="aprender" data-tense="perfeito" data-person="eles"></td>
-                        </tr>
-                        <tr class="verb-ir">
-                            <td class="person">decidir</td>
-                            <td class="verb-structure">decid<input type="text" class="termination-input" data-correct="i" data-verb="decidir" data-tense="perfeito" data-person="eu"></td>
-                            <td class="verb-structure">decid<input type="text" class="termination-input" data-correct="iste" data-verb="decidir" data-tense="perfeito" data-person="tu"></td>
-                            <td class="verb-structure">decid<input type="text" class="termination-input" data-correct="iu" data-verb="decidir" data-tense="perfeito" data-person="ele"></td>
-                            <td class="verb-structure">decid<input type="text" class="termination-input" data-correct="imos" data-verb="decidir" data-tense="perfeito" data-person="nos"></td>
-                            <td class="verb-structure">decid<input type="text" class="termination-input" data-correct="istes" data-verb="decidir" data-tense="perfeito" data-person="vos"></td>
-                            <td class="verb-structure">decid<input type="text" class="termination-input" data-correct="iram" data-verb="decidir" data-tense="perfeito" data-person="eles"></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            
             <!-- PRETÉRITO IMPERFEITO DO INDICATIVO -->
             <div class="exercise-section">
-                <h2 class="exercise-title">3. Pretérito Imperfeito do Indicativo</h2>
-                <div class="verb-info">Radical: estud- | aprend- | decid-</div>
+                <h2 class="exercise-title">2. Pretérito Imperfeito do Indicativo</h2>
+                
+                <!-- VERBO ESTUDAR -->
                 <table class="exercise-table">
                     <thead>
                         <tr>
-                            <th>Verbo</th>
+                            <th colspan="7" style="background: #27ae60;">Verbo ESTUDAR (radical: estud-)</th>
+                        </tr>
+                        <tr>
+                            <th>Pessoa</th>
                             <th>Eu</th>
                             <th>Tu</th>
                             <th>Ele/Você</th>
@@ -405,9 +458,9 @@
                             <th>Eles/Vocês</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr class="verb-ar">
-                            <td class="person">estudar</td>
+                    <tbody class="conj-ar">
+                        <tr>
+                            <td class="person">Conjugação</td>
                             <td class="verb-structure">estud<input type="text" class="termination-input" data-correct="ava" data-verb="estudar" data-tense="imperfeito" data-person="eu"></td>
                             <td class="verb-structure">estud<input type="text" class="termination-input" data-correct="avas" data-verb="estudar" data-tense="imperfeito" data-person="tu"></td>
                             <td class="verb-structure">estud<input type="text" class="termination-input" data-correct="ava" data-verb="estudar" data-tense="imperfeito" data-person="ele"></td>
@@ -415,8 +468,28 @@
                             <td class="verb-structure">estud<input type="text" class="termination-input" data-correct="áveis" data-verb="estudar" data-tense="imperfeito" data-person="vos"></td>
                             <td class="verb-structure">estud<input type="text" class="termination-input" data-correct="avam" data-verb="estudar" data-tense="imperfeito" data-person="eles"></td>
                         </tr>
-                        <tr class="verb-er">
-                            <td class="person">aprender</td>
+                    </tbody>
+                </table>
+                
+                <!-- VERBO APRENDER -->
+                <table class="exercise-table">
+                    <thead>
+                        <tr>
+                            <th colspan="7" style="background: #2980b9;">Verbo APRENDER (radical: aprend-)</th>
+                        </tr>
+                        <tr>
+                            <th>Pessoa</th>
+                            <th>Eu</th>
+                            <th>Tu</th>
+                            <th>Ele/Você</th>
+                            <th>Nós</th>
+                            <th>Vós</th>
+                            <th>Eles/Vocês</th>
+                        </tr>
+                    </thead>
+                    <tbody class="conj-er">
+                        <tr>
+                            <td class="person">Conjugação</td>
                             <td class="verb-structure">aprend<input type="text" class="termination-input" data-correct="ia" data-verb="aprender" data-tense="imperfeito" data-person="eu"></td>
                             <td class="verb-structure">aprend<input type="text" class="termination-input" data-correct="ias" data-verb="aprender" data-tense="imperfeito" data-person="tu"></td>
                             <td class="verb-structure">aprend<input type="text" class="termination-input" data-correct="ia" data-verb="aprender" data-tense="imperfeito" data-person="ele"></td>
@@ -424,8 +497,28 @@
                             <td class="verb-structure">aprend<input type="text" class="termination-input" data-correct="íeis" data-verb="aprender" data-tense="imperfeito" data-person="vos"></td>
                             <td class="verb-structure">aprend<input type="text" class="termination-input" data-correct="iam" data-verb="aprender" data-tense="imperfeito" data-person="eles"></td>
                         </tr>
-                        <tr class="verb-ir">
-                            <td class="person">decidir</td>
+                    </tbody>
+                </table>
+                
+                <!-- VERBO DECIDIR -->
+                <table class="exercise-table">
+                    <thead>
+                        <tr>
+                            <th colspan="7" style="background: #8e44ad;">Verbo DECIDIR (radical: decid-)</th>
+                        </tr>
+                        <tr>
+                            <th>Pessoa</th>
+                            <th>Eu</th>
+                            <th>Tu</th>
+                            <th>Ele/Você</th>
+                            <th>Nós</th>
+                            <th>Vós</th>
+                            <th>Eles/Vocês</th>
+                        </tr>
+                    </thead>
+                    <tbody class="conj-ir">
+                        <tr>
+                            <td class="person">Conjugação</td>
                             <td class="verb-structure">decid<input type="text" class="termination-input" data-correct="ia" data-verb="decidir" data-tense="imperfeito" data-person="eu"></td>
                             <td class="verb-structure">decid<input type="text" class="termination-input" data-correct="ias" data-verb="decidir" data-tense="imperfeito" data-person="tu"></td>
                             <td class="verb-structure">decid<input type="text" class="termination-input" data-correct="ia" data-verb="decidir" data-tense="imperfeito" data-person="ele"></td>
@@ -437,14 +530,18 @@
                 </table>
             </div>
             
-            <!-- FUTURO DO PRESENTE DO INDICATIVO -->
+            <!-- PRETÉRITO PERFEITO DO INDICATIVO -->
             <div class="exercise-section">
-                <h2 class="exercise-title">4. Futuro do Presente do Indicativo</h2>
-                <div class="verb-info">Radical: estud- | aprend- | decid-</div>
+                <h2 class="exercise-title">3. Pretérito Perfeito do Indicativo</h2>
+                
+                <!-- VERBO ESTUDAR -->
                 <table class="exercise-table">
                     <thead>
                         <tr>
-                            <th>Verbo</th>
+                            <th colspan="7" style="background: #27ae60;">Verbo ESTUDAR (radical: estud-)</th>
+                        </tr>
+                        <tr>
+                            <th>Pessoa</th>
                             <th>Eu</th>
                             <th>Tu</th>
                             <th>Ele/Você</th>
@@ -453,9 +550,101 @@
                             <th>Eles/Vocês</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr class="verb-ar">
-                            <td class="person">estudar</td>
+                    <tbody class="conj-ar">
+                        <tr>
+                            <td class="person">Conjugação</td>
+                            <td class="verb-structure">estud<input type="text" class="termination-input" data-correct="ei" data-verb="estudar" data-tense="perfeito" data-person="eu"></td>
+                            <td class="verb-structure">estud<input type="text" class="termination-input" data-correct="aste" data-verb="estudar" data-tense="perfeito" data-person="tu"></td>
+                            <td class="verb-structure">estud<input type="text" class="termination-input" data-correct="ou" data-verb="estudar" data-tense="perfeito" data-person="ele"></td>
+                            <td class="verb-structure">estud<input type="text" class="termination-input" data-correct="amos" data-verb="estudar" data-tense="perfeito" data-person="nos"></td>
+                            <td class="verb-structure">estud<input type="text" class="termination-input" data-correct="astes" data-verb="estudar" data-tense="perfeito" data-person="vos"></td>
+                            <td class="verb-structure">estud<input type="text" class="termination-input" data-correct="aram" data-verb="estudar" data-tense="perfeito" data-person="eles"></td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <!-- VERBO APRENDER -->
+                <table class="exercise-table">
+                    <thead>
+                        <tr>
+                            <th colspan="7" style="background: #2980b9;">Verbo APRENDER (radical: aprend-)</th>
+                        </tr>
+                        <tr>
+                            <th>Pessoa</th>
+                            <th>Eu</th>
+                            <th>Tu</th>
+                            <th>Ele/Você</th>
+                            <th>Nós</th>
+                            <th>Vós</th>
+                            <th>Eles/Vocês</th>
+                        </tr>
+                    </thead>
+                    <tbody class="conj-er">
+                        <tr>
+                            <td class="person">Conjugação</td>
+                            <td class="verb-structure">aprend<input type="text" class="termination-input" data-correct="i" data-verb="aprender" data-tense="perfeito" data-person="eu"></td>
+                            <td class="verb-structure">aprend<input type="text" class="termination-input" data-correct="este" data-verb="aprender" data-tense="perfeito" data-person="tu"></td>
+                            <td class="verb-structure">aprend<input type="text" class="termination-input" data-correct="eu" data-verb="aprender" data-tense="perfeito" data-person="ele"></td>
+                            <td class="verb-structure">aprend<input type="text" class="termination-input" data-correct="emos" data-verb="aprender" data-tense="perfeito" data-person="nos"></td>
+                            <td class="verb-structure">aprend<input type="text" class="termination-input" data-correct="estes" data-verb="aprender" data-tense="perfeito" data-person="vos"></td>
+                            <td class="verb-structure">aprend<input type="text" class="termination-input" data-correct="eram" data-verb="aprender" data-tense="perfeito" data-person="eles"></td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <!-- VERBO DECIDIR -->
+                <table class="exercise-table">
+                    <thead>
+                        <tr>
+                            <th colspan="7" style="background: #8e44ad;">Verbo DECIDIR (radical: decid-)</th>
+                        </tr>
+                        <tr>
+                            <th>Pessoa</th>
+                            <th>Eu</th>
+                            <th>Tu</th>
+                            <th>Ele/Você</th>
+                            <th>Nós</th>
+                            <th>Vós</th>
+                            <th>Eles/Vocês</th>
+                        </tr>
+                    </thead>
+                    <tbody class="conj-ir">
+                        <tr>
+                            <td class="person">Conjugação</td>
+                            <td class="verb-structure">decid<input type="text" class="termination-input" data-correct="i" data-verb="decidir" data-tense="perfeito" data-person="eu"></td>
+                            <td class="verb-structure">decid<input type="text" class="termination-input" data-correct="iste" data-verb="decidir" data-tense="perfeito" data-person="tu"></td>
+                            <td class="verb-structure">decid<input type="text" class="termination-input" data-correct="iu" data-verb="decidir" data-tense="perfeito" data-person="ele"></td>
+                            <td class="verb-structure">decid<input type="text" class="termination-input" data-correct="imos" data-verb="decidir" data-tense="perfeito" data-person="nos"></td>
+                            <td class="verb-structure">decid<input type="text" class="termination-input" data-correct="istes" data-verb="decidir" data-tense="perfeito" data-person="vos"></td>
+                            <td class="verb-structure">decid<input type="text" class="termination-input" data-correct="iram" data-verb="decidir" data-tense="perfeito" data-person="eles"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <!-- FUTURO DO PRESENTE DO INDICATIVO -->
+            <div class="exercise-section">
+                <h2 class="exercise-title">4. Futuro do Presente do Indicativo</h2>
+                
+                <!-- VERBO ESTUDAR -->
+                <table class="exercise-table">
+                    <thead>
+                        <tr>
+                            <th colspan="7" style="background: #27ae60;">Verbo ESTUDAR (radical: estud-)</th>
+                        </tr>
+                        <tr>
+                            <th>Pessoa</th>
+                            <th>Eu</th>
+                            <th>Tu</th>
+                            <th>Ele/Você</th>
+                            <th>Nós</th>
+                            <th>Vós</th>
+                            <th>Eles/Vocês</th>
+                        </tr>
+                    </thead>
+                    <tbody class="conj-ar">
+                        <tr>
+                            <td class="person">Conjugação</td>
                             <td class="verb-structure">estud<input type="text" class="termination-input" data-correct="arei" data-verb="estudar" data-tense="futuro-presente" data-person="eu"></td>
                             <td class="verb-structure">estud<input type="text" class="termination-input" data-correct="arás" data-verb="estudar" data-tense="futuro-presente" data-person="tu"></td>
                             <td class="verb-structure">estud<input type="text" class="termination-input" data-correct="ará" data-verb="estudar" data-tense="futuro-presente" data-person="ele"></td>
@@ -463,8 +652,28 @@
                             <td class="verb-structure">estud<input type="text" class="termination-input" data-correct="areis" data-verb="estudar" data-tense="futuro-presente" data-person="vos"></td>
                             <td class="verb-structure">estud<input type="text" class="termination-input" data-correct="arão" data-verb="estudar" data-tense="futuro-presente" data-person="eles"></td>
                         </tr>
-                        <tr class="verb-er">
-                            <td class="person">aprender</td>
+                    </tbody>
+                </table>
+                
+                <!-- VERBO APRENDER -->
+                <table class="exercise-table">
+                    <thead>
+                        <tr>
+                            <th colspan="7" style="background: #2980b9;">Verbo APRENDER (radical: aprend-)</th>
+                        </tr>
+                        <tr>
+                            <th>Pessoa</th>
+                            <th>Eu</th>
+                            <th>Tu</th>
+                            <th>Ele/Você</th>
+                            <th>Nós</th>
+                            <th>Vós</th>
+                            <th>Eles/Vocês</th>
+                        </tr>
+                    </thead>
+                    <tbody class="conj-er">
+                        <tr>
+                            <td class="person">Conjugação</td>
                             <td class="verb-structure">aprend<input type="text" class="termination-input" data-correct="erei" data-verb="aprender" data-tense="futuro-presente" data-person="eu"></td>
                             <td class="verb-structure">aprend<input type="text" class="termination-input" data-correct="erás" data-verb="aprender" data-tense="futuro-presente" data-person="tu"></td>
                             <td class="verb-structure">aprend<input type="text" class="termination-input" data-correct="erá" data-verb="aprender" data-tense="futuro-presente" data-person="ele"></td>
@@ -472,8 +681,28 @@
                             <td class="verb-structure">aprend<input type="text" class="termination-input" data-correct="ereis" data-verb="aprender" data-tense="futuro-presente" data-person="vos"></td>
                             <td class="verb-structure">aprend<input type="text" class="termination-input" data-correct="erão" data-verb="aprender" data-tense="futuro-presente" data-person="eles"></td>
                         </tr>
-                        <tr class="verb-ir">
-                            <td class="person">decidir</td>
+                    </tbody>
+                </table>
+                
+                <!-- VERBO DECIDIR -->
+                <table class="exercise-table">
+                    <thead>
+                        <tr>
+                            <th colspan="7" style="background: #8e44ad;">Verbo DECIDIR (radical: decid-)</th>
+                        </tr>
+                        <tr>
+                            <th>Pessoa</th>
+                            <th>Eu</th>
+                            <th>Tu</th>
+                            <th>Ele/Você</th>
+                            <th>Nós</th>
+                            <th>Vós</th>
+                            <th>Eles/Vocês</th>
+                        </tr>
+                    </thead>
+                    <tbody class="conj-ir">
+                        <tr>
+                            <td class="person">Conjugação</td>
                             <td class="verb-structure">decid<input type="text" class="termination-input" data-correct="irei" data-verb="decidir" data-tense="futuro-presente" data-person="eu"></td>
                             <td class="verb-structure">decid<input type="text" class="termination-input" data-correct="irás" data-verb="decidir" data-tense="futuro-presente" data-person="tu"></td>
                             <td class="verb-structure">decid<input type="text" class="termination-input" data-correct="irá" data-verb="decidir" data-tense="futuro-presente" data-person="ele"></td>
@@ -488,11 +717,15 @@
             <!-- FUTURO DO PRETÉRITO DO INDICATIVO -->
             <div class="exercise-section">
                 <h2 class="exercise-title">5. Futuro do Pretérito do Indicativo</h2>
-                <div class="verb-info">Radical: estud- | aprend- | decid-</div>
+                
+                <!-- VERBO ESTUDAR -->
                 <table class="exercise-table">
                     <thead>
                         <tr>
-                            <th>Verbo</th>
+                            <th colspan="7" style="background: #27ae60;">Verbo ESTUDAR (radical: estud-)</th>
+                        </tr>
+                        <tr>
+                            <th>Pessoa</th>
                             <th>Eu</th>
                             <th>Tu</th>
                             <th>Ele/Você</th>
@@ -501,9 +734,9 @@
                             <th>Eles/Vocês</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr class="verb-ar">
-                            <td class="person">estudar</td>
+                    <tbody class="conj-ar">
+                        <tr>
+                            <td class="person">Conjugação</td>
                             <td class="verb-structure">estud<input type="text" class="termination-input" data-correct="aria" data-verb="estudar" data-tense="futuro-preterito" data-person="eu"></td>
                             <td class="verb-structure">estud<input type="text" class="termination-input" data-correct="arias" data-verb="estudar" data-tense="futuro-preterito" data-person="tu"></td>
                             <td class="verb-structure">estud<input type="text" class="termination-input" data-correct="aria" data-verb="estudar" data-tense="futuro-preterito" data-person="ele"></td>
@@ -511,8 +744,28 @@
                             <td class="verb-structure">estud<input type="text" class="termination-input" data-correct="aríeis" data-verb="estudar" data-tense="futuro-preterito" data-person="vos"></td>
                             <td class="verb-structure">estud<input type="text" class="termination-input" data-correct="ariam" data-verb="estudar" data-tense="futuro-preterito" data-person="eles"></td>
                         </tr>
-                        <tr class="verb-er">
-                            <td class="person">aprender</td>
+                    </tbody>
+                </table>
+                
+                <!-- VERBO APRENDER -->
+                <table class="exercise-table">
+                    <thead>
+                        <tr>
+                            <th colspan="7" style="background: #2980b9;">Verbo APRENDER (radical: aprend-)</th>
+                        </tr>
+                        <tr>
+                            <th>Pessoa</th>
+                            <th>Eu</th>
+                            <th>Tu</th>
+                            <th>Ele/Você</th>
+                            <th>Nós</th>
+                            <th>Vós</th>
+                            <th>Eles/Vocês</th>
+                        </tr>
+                    </thead>
+                    <tbody class="conj-er">
+                        <tr>
+                            <td class="person">Conjugação</td>
                             <td class="verb-structure">aprend<input type="text" class="termination-input" data-correct="eria" data-verb="aprender" data-tense="futuro-preterito" data-person="eu"></td>
                             <td class="verb-structure">aprend<input type="text" class="termination-input" data-correct="erias" data-verb="aprender" data-tense="futuro-preterito" data-person="tu"></td>
                             <td class="verb-structure">aprend<input type="text" class="termination-input" data-correct="eria" data-verb="aprender" data-tense="futuro-preterito" data-person="ele"></td>
@@ -520,8 +773,28 @@
                             <td class="verb-structure">aprend<input type="text" class="termination-input" data-correct="eríeis" data-verb="aprender" data-tense="futuro-preterito" data-person="vos"></td>
                             <td class="verb-structure">aprend<input type="text" class="termination-input" data-correct="eriam" data-verb="aprender" data-tense="futuro-preterito" data-person="eles"></td>
                         </tr>
-                        <tr class="verb-ir">
-                            <td class="person">decidir</td>
+                    </tbody>
+                </table>
+                
+                <!-- VERBO DECIDIR -->
+                <table class="exercise-table">
+                    <thead>
+                        <tr>
+                            <th colspan="7" style="background: #8e44ad;">Verbo DECIDIR (radical: decid-)</th>
+                        </tr>
+                        <tr>
+                            <th>Pessoa</th>
+                            <th>Eu</th>
+                            <th>Tu</th>
+                            <th>Ele/Você</th>
+                            <th>Nós</th>
+                            <th>Vós</th>
+                            <th>Eles/Vocês</th>
+                        </tr>
+                    </thead>
+                    <tbody class="conj-ir">
+                        <tr>
+                            <td class="person">Conjugação</td>
                             <td class="verb-structure">decid<input type="text" class="termination-input" data-correct="iria" data-verb="decidir" data-tense="futuro-preterito" data-person="eu"></td>
                             <td class="verb-structure">decid<input type="text" class="termination-input" data-correct="irias" data-verb="decidir" data-tense="futuro-preterito" data-person="tu"></td>
                             <td class="verb-structure">decid<input type="text" class="termination-input" data-correct="iria" data-verb="decidir" data-tense="futuro-preterito" data-person="ele"></td>
@@ -549,6 +822,10 @@
             
             <div class="results" id="final-results">
                 <h2>Resultado Final</h2>
+                <div class="student-results">
+                    <p><strong>Aluno:</strong> <span id="result-name">-</span></p>
+                    <p><strong>Turma:</strong> <span id="result-class">-</span></p>
+                </div>
                 <div class="final-score" id="final-score">0</div>
                 <p>de <span id="total-questions-final">0</span> questões</p>
                 <button class="btn" onclick="closeResults()">Fechar</button>
@@ -649,6 +926,11 @@
         
         // Mostrar resultados finais
         function showFinalResults() {
+            const studentName = document.getElementById('student-name').value || 'Não informado';
+            const studentClass = document.getElementById('student-class').value || 'Não informada';
+            
+            document.getElementById('result-name').textContent = studentName;
+            document.getElementById('result-class').textContent = studentClass;
             document.getElementById('final-score').textContent = score;
             document.getElementById('final-results').style.display = 'block';
         }
